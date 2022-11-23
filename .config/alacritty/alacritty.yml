@@ -1,0 +1,22 @@
+import:
+  - ~/.config/alacritty/color.yml
+  - ~/.config/alacritty/font.yml
+
+env:
+  TERM: alacritty
+
+window:
+  decorations: full
+  startup_mode: Windowed
+  dynamic_title: true
+  history: 10000
+  multiplier: 3
+  opacity: 1.0
+
+cursor:
+  style:
+    shape: Block
+    blinking: Always 
+  unfocused_hollow: false
+
+live_config_reload: true
