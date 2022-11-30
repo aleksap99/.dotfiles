@@ -16,7 +16,6 @@ bind "set completion-ignore-case on"
 HISTSIZE=10000
 HISTFILESIZE=10000
 
-
 #********************************************************************#
 #-------------------------All types of Alias-------------------------#
 #____________________________________________________________________#
@@ -72,7 +71,7 @@ alias wget="wget -c"
 
 # pacman
 alias pacman='sudo pacman --color auto'
-alias update='sudo pacman -Syu'
+alias update='sudo pacman -Syyu'
 alias psearch='sudo pacman -Ss'
 alias install='sudo pacman -S'
 alias uninstall='sudo pacman -Rcns'
