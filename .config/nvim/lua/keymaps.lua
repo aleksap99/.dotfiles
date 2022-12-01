@@ -1,6 +1,7 @@
 local map = require("keymapper").map
 
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { silent = true})
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { silent = true})
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { silent = true})
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { silent = true})
 map("n", "<C-n>", ":NvimTreeToggle<CR>", { silent = true})

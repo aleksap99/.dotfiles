@@ -23,6 +23,10 @@ require("lualine").setup{
   }
 }
 
+local alpha = require("alpha")
+local dashboard = require("alpha.themes.dashboard")
+
+
 require('telescope').setup {
   extensions = {
     fzf = {

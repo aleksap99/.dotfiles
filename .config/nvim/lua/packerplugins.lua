@@ -19,4 +19,10 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-jdtls'
   use 'nvim-lualine/lualine.nvim'
   use 'drewtempelmeyer/palenight.vim'
+  use {
+    'goolord/alpha-nvim',
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.dashboard'.config)
+    end
+  }
 end)

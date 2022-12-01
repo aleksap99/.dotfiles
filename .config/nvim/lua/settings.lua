@@ -1,6 +1,7 @@
 vim.opt.syntax = "on" 
 vim.opt.wrap = false 
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
@@ -15,4 +16,6 @@ vim.g.mapleader = "\\"
 
 vim.cmd("colorscheme palenight")
 vim.cmd("set updatetime=500")
-
+vim.cmd("hi CursorLineNr guifg=#fcf403")
+vim.cmd("set cursorline")
+vim.cmd("set cursorlineopt=number")
