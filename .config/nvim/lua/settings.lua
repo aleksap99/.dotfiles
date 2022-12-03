@@ -14,7 +14,7 @@ vim.g.mapleader = "\\"
 --vim.opt.ls = 0
 --vim.opt.ch = 0
 
-vim.cmd("colorscheme palenight")
+vim.cmd("colorscheme catppuccin-macchiato")
 vim.cmd("set updatetime=500")
 vim.cmd("hi CursorLineNr guifg=#fcf403")
 vim.cmd("set cursorline")
