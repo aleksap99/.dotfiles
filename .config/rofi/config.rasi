@@ -1,0 +1,17 @@
+configuration {
+    modi:                   "drun,power:./.config/rofi/modules/powermenu.sh --no-symbols,keyboard:./.config/rofi/modules/keyboardmenu.sh --no-symbols,emoji:rofimoji --action copy --max-recent 0";
+    show-icons:             true;
+    terminal:               "alacritty";
+    drun-display-format:    "{icon} {name}";
+    location:               0;
+    disable-history:        false;
+    hide-scrollbar:         true;
+    scroll-method:          1;
+    display-drun:           "🪶 Run";    
+    display-power:          "🔘 Power menu";
+    display-emoji:          "💀 Emoji";
+    sidebar-mode:           true;
+    font:                   "JetBrains Mono NF 14";
+}
+
+@theme "./themes/macchiato.rasi"
