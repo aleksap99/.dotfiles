@@ -1,13 +1,10 @@
-#import os
+import os
 from collections.abc import Callable
 from libqtile import qtile, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-#from libqtile.utils import guess_terminal
-from qtile_extras.widget.decorations import BorderDecoration
 
 mod = "mod4"
-#terminal = guess_terminal()
 terminal = "alacritty"
 
 keys = [
@@ -34,6 +31,8 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "c", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi - the application launcher"),
+    Key([mod], "q", lazy.spawn("rofi -show power"), desc="Launch rofi - the application launcher"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
@@ -81,21 +80,49 @@ for i in groups:
             #     desc="move focused window to group {}".format(i.name)),
         ]
     )
-layout_theme = {"border_width": 2,
-                "margin": 4,
-                "border_focus": "e1acff",
-                "border_normal": "1D2330"
-                }
 
-
+colors = {
+    "rosewater": "#f4dbd6",
+    "white": "#fff",
+    "flamingo"    : "#f0c6c6",
+    "pink"        : "#f5bde6",
+    "mauve"       : "#c6a0f6",
+    "red"         : "#ed8796",
+    "maroon"      : "#ee99a0",
+    "peach"       : "#f5a97f",
+    "yellow"      : "#eed49f",
+    "green"       : "#a6da95",
+    "teal"        : "#8bd5ca",
+    "sky"         : "#91d7e3",
+    "sapphire"    : "#7dc4e4",
+    "blue"        : "#8aadf4",
+    "lavender"    : "#b7bdf8",
+    "text"        : "#cad3f5",
+    "subtext1"    : "#b8c0e0",
+    "subtext0"    : "#a5adcb",
+    "overlay2"    : "#939ab7",
+    "overlay1"    : "#8087a2",
+    "overlay0"    : "#6e738d",
+    "surface2"    : "#5b6078",
+    "surface1"    : "#494d64",
+    "surface0"    : "#363a4f",
+    "base"        : "#24273a",
+    "mantle"      : "#1e2030",
+    "crust"       : "#181926"
+}
+layout_theme = {"border_width": 1,
+                "margin": 8,
+                "border_focus": colors["sapphire"],
+                "border_normal": colors["base"],
+               }
 layouts = [
     layout.Columns(**layout_theme),
-    layout.Max(**layout_theme),
+    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(**layout_theme),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -104,201 +131,107 @@ layouts = [
     # layout.Zoomy(),
 ]
 
-colors = [["#282c34", "#282c34"],
-          ["#1c1f24", "#1c1f24"],
-          ["#dfdfdf", "#dfdfdf"],
-          ["#ff6c6b", "#ff6c6b"],
-          ["#98be65", "#98be65"],
-          ["#da8548", "#da8548"],
-          ["#51afef", "#51afef"],
-          ["#c678dd", "#c678dd"],
-          ["#46d9ff", "#46d9ff"],
-          ["#a9a1e1", "#a9a1e1"]]
 
 def init_widgets_list_main(visible_groups):
     separator = widget.Sep(
             linewidth = 0,
             padding = 6,
-            foreground = colors[2],
-            background = colors[0])
+            )
+
     pipe = widget.TextBox(
             text = '|',
             font = "Iosevka Bold",
-            background = colors[0],
             foreground = '474747',
             padding = 2,
             fontsize = 14)
 
     widgets_list = [
         separator,
+        widget.Image(
+            filename  = '~/.config/qtile/icons/qtile.png',
+            margin = 5,
+        ),
+        widget.Spacer(
+            length = 20,
+        ),
         widget.GroupBox(
             font = "Iosevka Bold",
             fontsize = 11,
             margin_y = 3,
             margin_x = 0,
             padding_y = 5,
-            padding_x = 3,
-            borderwidth = 3,
-            active = colors[2],
-            inactive = colors[7],
+            padding_x = 7,
+            borderwidth = 2,
+            active = colors["mauve"],
+            inactive = colors["white"],
             rounded = False,
-            highlight_color = colors[1],
+            highlight_color = colors["mantle"],
             highlight_method = "line",
-            this_current_screen_border = colors[6],
-            this_screen_border = colors [4],
-            other_current_screen_border = colors[6],
-            other_screen_border = colors[4],
-            foreground = colors[2],
-            background = colors[0],
+            this_current_screen_border = colors["red"],
+            other_current_screen_border = colors["sapphire"],
             visible_groups = visible_groups,
         ),
-        separator, 
-        pipe,
-#             widget.CurrentLayoutIcon(
-#                      custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-#                      foreground = colors[2],
-#                      background = colors[0],
-#                      padding = 0,
-#                      scale = 0.7
-#                      ),
-        widget.CurrentLayout(
-            foreground = colors[2],
-            background = colors[0],
-            padding = 5
-        ),
-        pipe,
         widget.Prompt(),
-        widget.WindowName(
-            foreground = colors[6],
-            background = colors[0],
-            padding = 0
-        ),
+        separator,
+        widget.Spacer(),
         widget.Systray(
-            background = colors[0],
             padding = 5
         ),
         separator,
-#       widget.Net(
-#           interface = "enp34s0",
-#           format = 'Net: {down} ↓↑ {up}',
-#           foreground = colors[3],
-#           background = colors[0],
-#           padding = 5,
-#           decorations=[
-#               BorderDecoration(
-#                   colour = colors[3],
-#                   border_width = [0, 0, 2, 0],
-#                   padding_x = 5,
-#                   padding_y = None,
-#               )
-#           ],
-#       ),
-#       separator,
-#       widget.ThermalSensor(
-#           foreground = colors[4],
-#           background = colors[0],
-#           threshold = 90,
-#           fmt = 'Temp: {}',
-#           padding = 5,
-#           decorations=[
-#               BorderDecoration(
-#                   colour = colors[4],
-#                   border_width = [0, 0, 2, 0],
-#                   padding_x = 5,
-#                   padding_y = None,
-#               ),
-#           ],
-#       ),
-#       separator, 
         widget.CheckUpdates(
             update_interval = 1800,
             distro = "Arch_checkupdates",
-            display_format = "{updates} ↓",
-            foreground = colors[5],
-            colour_have_updates = colors[5],
-            colour_no_updates = colors[5],
+            display_format = "{updates} ",
+            foreground = colors["peach"],
+            colour_have_updates = colors["peach"],
+            colour_no_updates = colors["peach"],
             mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e sudo pacman -Syu')},
             padding = 5,
-            background = colors[0],
-            decorations=[
-                BorderDecoration(
-                    colour = colors[5],
-                    border_width = [0, 0, 2, 0],
-                    padding_x = 5,
-                    padding_y = None,
-                )
-            ],
         ),
-#       widget.Memory(
-#           foreground = colors[9],
-#           background = colors[0],
-#           mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e htop')},
-#           fmt = 'Mem: {}',
-#           padding = 5,
-#           decorations=[
-#               BorderDecoration(
-#                   colour = colors[9],
-#                   border_width = [0, 0, 2, 0],
-#                   padding_x = 5,
-#                   padding_y = None,
-#               )
-#           ],
-#       ),
-#       widget.Volume(
-#           foreground = colors[7],
-#           background = colors[0],
-#           fmt = 'Vol: {}',
-#           padding = 5,
-#           decorations=[
-#               BorderDecoration(
-#                   colour = colors[7],
-#                   border_width = [0, 0, 2, 0],
-#                   padding_x = 5,
-#                   padding_y = None,
-#               )
-#           ],
-#       ),
+        widget.TextBox(
+            text = '',
+            font = "Iosevka Bold",
+            fontsize = 60,
+            foreground = colors["sapphire"],
+            mouse_callbacks = {
+                "Button1": lambda: qtile.cmd_spawn(os.path.expanduser("~/scripts/keyboard-leyout.sh"))
+            },
+        ),
         widget.KeyboardLayout(
-            foreground = colors[8],
-            background = colors[0],
-            fmt = 'Keyboard: {}',
-            padding = 5,
-            decorations=[
-                BorderDecoration(
-                    colour = colors[8],
-                    border_width = [0, 0, 2, 0],
-                    padding_x = 5,
-                    padding_y = None,
-                )
-            ],
+            foreground = colors["sapphire"],
+        ),
+        widget.Spacer(
+            length = 20,
         ),
         widget.Clock(
-            foreground = colors[6],
-            background = colors[0],
-            format = "%A, %B %d - %H:%M ",
-            decorations=[
-                BorderDecoration(
-                    colour = colors[6],
-                    border_width = [0, 0, 2, 0],
-                    padding_x = 5,
-                    padding_y = None,
-                )
+            foreground = colors["blue"],
+            format = "%H:%M",
+        ),
+        widget.CurrentLayoutIcon(
+            padding = 0,
+            scale = 0.6,
+            custom_icon_paths = [
+                os.path.expanduser("~/.config/qtile/icons/"),
             ],
         ),
-
+        widget.Image(
+            filename = '~/.config/qtile/icons/power.png',
+            margin = 5,
+            mouse_callbacks  = {
+                'Button1': lambda: qtile.cmd_spawn('rofi -show power')
+            }
+        ),
     ]
     return widgets_list
 
 def init_widgets_list_secondary(visible_groups):
     separator = widget.Sep(
             linewidth = 0,
-            padding = 6,
-            foreground = colors[2],
-            background = colors[0])
+            padding = 6,)
+
     pipe = widget.TextBox(
             text = '|',
             font = "Iosevka Bold",
-            background = colors[0],
             foreground = '474747',
             padding = 2,
             fontsize = 14)
@@ -311,27 +244,18 @@ def init_widgets_list_secondary(visible_groups):
             margin_y = 3,
             margin_x = 0,
             padding_y = 5,
-            padding_x = 3,
-            borderwidth = 3,
-            active = colors[2],
-            inactive = colors[7],
+            padding_x = 7,
+            borderwidth = 2,
+            active = colors["mauve"],
+            inactive = colors["white"],
             rounded = False,
-            highlight_color = colors[1],
+            highlight_color = colors["mantle"],
             highlight_method = "line",
-            this_current_screen_border = colors[6],
-            this_screen_border = colors [4],
-            other_current_screen_border = colors[6],
-            other_screen_border = colors[4],
-            foreground = colors[2],
-            background = colors[0],
+            this_current_screen_border = colors["red"],
+            other_current_screen_border = colors["sapphire"],
             visible_groups = visible_groups,
         ),
         pipe,
-        widget.WindowName(
-            foreground = colors[6],
-            background = colors[0],
-            padding = 0
-        ),
     ]
     return widgets_list
 
@@ -339,8 +263,12 @@ def init_screen(widgets):
     screen = Screen(
         top=bar.Bar(
             widgets=widgets,
-            size=22,
+            size=40,
+            margin = [12, 12, 12, 12],
+            background = colors["base"],
         ),
+        wallpaper='~/.config/qtile/icons/catppuccin-arch.png',
+        wallpaper_mode="fill",
     )
     return screen
 
@@ -362,18 +290,22 @@ dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-#floating_layout = layout.Floating(
-#    float_rules=[
-#        # Run the utility of `xprop` to see the wm class and name of an X client.
-#        *layout.Floating.default_float_rules,
-#       Match(wm_class="confirmreset"),  # gitk
-#       Match(wm_class="makebranch"),  # gitk
-#       Match(wm_class="maketag"),  # gitk
-#       Match(wm_class="ssh-askpass"),  # ssh-askpass
-#       Match(title="branchdialog"),  # gitk
-#       Match(title="pinentry"),  # GPG key password entry
-#    ]
-#)
+floating_layout = layout.Floating(
+    border_focus = colors["sapphire"],
+    border_normal = colors["base"],
+    margin = 12,
+    border_width = 2,
+    float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        *layout.Floating.default_float_rules,
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="makebranch"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(title="branchdialog"),  # gitk
+        Match(title="pinentry"),  # GPG key password entry
+    ]
+)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
