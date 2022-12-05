@@ -52,8 +52,8 @@ alias rm="rm -I"
 alias n="nvim"
 
 # buku
-#alias b="buku --suggest"
-#alias buku_list="buku -p"
+alias b="buku --suggest"
+alias buku_list="buku -p"
 
 # Colorize the grep command output
 alias grep='grep --color=auto'
@@ -148,8 +148,6 @@ ex ()
 #neofetch
 #pfetch
 
-# starship prompt
-eval "$(starship init bash)"
 
 # git shortucts
 alias ga='git add'
@@ -165,3 +163,7 @@ alias gs='git status'
 # export stuff
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# starship prompt
+eval "$(starship init bash)"
+

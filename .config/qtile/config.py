@@ -1,7 +1,7 @@
 import os
 from collections.abc import Callable
 from libqtile import qtile, bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, DropDown, Group, Key, Match, ScratchPad, Screen
 from libqtile.lazy import lazy
 
 mod = "mod4"
@@ -31,8 +31,9 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "c", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi - the application launcher"),
-    Key([mod], "q", lazy.spawn("rofi -show power"), desc="Launch rofi - the application launcher"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi "),
+    Key([mod], "q", lazy.spawn("rofi -show power"), desc="Launch rofi power"),
+    Key(['control', "shift"], "l", lazy.spawn("slock"), desc="Launch slock"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
@@ -60,26 +61,34 @@ def go_to_group(name: str) -> Callable:
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.function(go_to_group(i.name)),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=False),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
+
+groups.append(ScratchPad('scratchpad', [
+    DropDown("term", "alacritty", width=0.5, y=0.3, x=0.25),
+    DropDown("files", "alacritty -e nnn -d -C", width=0.5, y=0.3, x=0.25),
+    DropDown("mixer", "pavucontrol", width=0.5, y=0.3, x=0.25),
+    DropDown("bitwarden", "bitwarden-desktop", width=0.5, y=0.3, x=0.25)
+    ]))
+
+keys.extend([
+    Key(["control"], "1", lazy.group["scratchpad"].dropdown_toggle("term")),
+    Key(["control"], "2", lazy.group["scratchpad"].dropdown_toggle("files")),
+    Key(["control"], "3", lazy.group["scratchpad"].dropdown_toggle("mixer")),
+    Key(["control"], "4", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
+    ])
 
 colors = {
     "rosewater": "#f4dbd6",
@@ -191,7 +200,7 @@ def init_widgets_list_main(visible_groups):
         widget.TextBox(
             text = '',
             font = "Iosevka Bold",
-            fontsize = 60,
+            fontsize = 40,
             foreground = colors["sapphire"],
             mouse_callbacks = {
                 "Button1": lambda: qtile.cmd_spawn(os.path.expanduser("~/scripts/keyboard-leyout.sh"))
