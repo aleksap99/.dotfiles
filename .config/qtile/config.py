@@ -22,6 +22,8 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle floating window"),
+    Key([mod], "b", lazy.hide_show_bar(), desc="Hides the bar"),
     Key(
         [mod, "shift"],
         "Return",
@@ -223,6 +225,7 @@ def init_widgets_list_main(visible_groups):
                 os.path.expanduser("~/.config/qtile/icons/"),
             ],
         ),
+ 
         widget.Image(
             filename = '~/.config/qtile/icons/power.png',
             margin = 5,
