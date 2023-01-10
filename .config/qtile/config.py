@@ -82,7 +82,8 @@ groups.append(ScratchPad('scratchpad', [
     DropDown("term", "alacritty", width=0.5, y=0.3, x=0.25),
     DropDown("files", "alacritty -e nnn -d -C", width=0.5, y=0.3, x=0.25),
     DropDown("mixer", "pavucontrol", width=0.5, y=0.3, x=0.25),
-    DropDown("bitwarden", "bitwarden-desktop", width=0.5, y=0.3, x=0.25)
+    DropDown("bitwarden", "bitwarden-desktop", width=0.5, y=0.3, x=0.25),
+    DropDown("timer", "ktimer", width=0.5, y=0.3, x=0.25)
     ]))
 
 keys.extend([
@@ -90,6 +91,7 @@ keys.extend([
     Key(["control"], "2", lazy.group["scratchpad"].dropdown_toggle("files")),
     Key(["control"], "3", lazy.group["scratchpad"].dropdown_toggle("mixer")),
     Key(["control"], "4", lazy.group["scratchpad"].dropdown_toggle("bitwarden")),
+    Key(["control"], "5", lazy.group["scratchpad"].dropdown_toggle("timer")),
     ])
 
 colors = {
