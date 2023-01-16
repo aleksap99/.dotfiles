@@ -1,5 +1,5 @@
-vim.opt.syntax = "on" 
-vim.opt.wrap = false 
+vim.opt.syntax = "on"
+vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
@@ -10,7 +10,7 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
-vim.g.mapleader = "\\"
+vim.g.mapleader = " "
 --vim.opt.ls = 0
 --vim.opt.ch = 0
 
