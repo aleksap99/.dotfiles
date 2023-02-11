@@ -2,9 +2,6 @@ import:
   - ~/.config/alacritty/color.yml
   - ~/.config/alacritty/font.yml
 
-env:
-  TERM: alacritty
-
 window:
   decorations: full
   startup_mode: Windowed
@@ -12,6 +9,9 @@ window:
   history: 10000
   multiplier: 3
   opacity: 1.0
+  dimensions:
+    columns: 143
+    lines: 35
 
 cursor:
   style:
