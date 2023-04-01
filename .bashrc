@@ -1,29 +1,18 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+source ~/.bash_aliases
+
 export HISTCONTROL=ignoreboth:erasedups
 export EDITOR='nvim'
 export VISUAL='nvim'
 export GOPATH=$HOME/go
-export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin/:/opt/aseprite:/opt/quick_notes/:$GOPATH/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin/:/opt/aseprite:$GOPATH/bin:$HOME/scripts/"
 
 bind "set completion-ignore-case on"
 
 HISTSIZE=10000
 HISTFILESIZE=10000
-
-alias b="cd ~/Projects/EchoRealms/backend-old/echorealms"
-alias f="cd ~/Projects/EchoRealms/react"
-alias encmount="encfs ~/.private ~/origin"
-alias encunmount="fusermount -u ~/origin"
-alias n="nvim"
-
-alias cd..='cd ..'
-alias pdw="pwd"
-
-alias rg="rg --sort path"
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias jctl="journalctl -p 3 -xb"
 
 ex ()
 {
@@ -50,12 +39,9 @@ ex ()
   fi
 }
 
-alias gs='git status'
-
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
 
 # starship prompt
 eval "$(starship init bash)"

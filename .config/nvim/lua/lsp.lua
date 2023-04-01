@@ -43,6 +43,10 @@ require 'lspconfig'.sumneko_lua.setup {
   }
 }
 
+require 'lspconfig'.jsonls.setup {
+  on_attach = on_attach
+}
+
 local metals_config = require("metals").bare_config()
 
 -- Example of settings

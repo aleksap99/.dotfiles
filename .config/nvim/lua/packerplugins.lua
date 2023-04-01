@@ -30,4 +30,7 @@ return require('packer').startup(function(use)
     end
   }
   use({ 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } })
+  use 'APZelos/blamer.nvim'
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('MunifTanjim/prettier.nvim')
 end)

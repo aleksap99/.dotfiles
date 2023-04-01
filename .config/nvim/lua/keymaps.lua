@@ -16,6 +16,9 @@ map("n", "<C-a>", "<ESC>^", { silent = true })
 map("i", "<C-e>", "<ESC>A", { silent = true })
 map("n", "<C-e>", "<ESC>$", { silent = true })
 
+map("v", "<C-c>", '"+y <ESC>', { silent = true })
+map("i", "<C-d>", '<Del>', { silent = true })
+
 local M = {}
 
 function M.setLspKeymaps(bufnr)
@@ -34,13 +37,14 @@ function M.setLspKeymaps(bufnr)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<leader>rr', function() vim.lsp.buf.format { async = true } end, bufopts)
 
   local opts = { noremap = true, silent = true }
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+  vim.keymap.set('n', '<leader>ea', vim.diagnostic.setqflist, opts)
 end
 
 return M
