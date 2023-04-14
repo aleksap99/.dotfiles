@@ -27,6 +27,11 @@ local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
 require('telescope').setup {
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules"
+    }
+  },
   extensions = {
     fzf = {
       fuzzy = true,
