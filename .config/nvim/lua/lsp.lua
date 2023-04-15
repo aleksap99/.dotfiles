@@ -31,18 +31,6 @@ require 'lspconfig'.html.setup {
   on_attach = on_attach
 }
 
-require 'lspconfig'.sumneko_lua.setup {
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-    }
-  }
-}
-
 require 'lspconfig'.jsonls.setup {
   on_attach = on_attach
 }
